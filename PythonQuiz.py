@@ -1,118 +1,173 @@
 import os
 from datetime import datetime
 
+
 def cls():
-    os.system('cls' if os.name=='nt' else 'clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def validateChoice(userChoice):
-    try:
-        val = int(userChoice)
-        if val >= 1 or val <= 3: #ensure 
-            return val
-    except ValueError:
-        print("\nThe availiable choices are 1-3.\n")
-    False
-	
+    
+    if userChoice == '':
+        return False
+    
+    val = int(userChoice)
 
-def chWindow(argument):
-    cases = {
-    1: "Starting Test",
-    2: "View Results",
-    3: "Exit",
-    }
-    print(cases)
+    if val >= 1 and val <= 4:  # ensure
+        return True
+    else:
+        print("\nThe available choices are 1-3.\n")
+        return False
 
 def MainMenu():
-    print("\nWelcome to the ITS-140 Quiz.\n")
+    cls()
+    print("\nWelcome to the Python Quiz.\n")
     print("In this program, we will test your knowledge on Python.\n")
-    print("Press any key to continue...\n")
+    input('Press enter to continue. . . ')
+
     print("\n1- Start Test")
     print("2- View Results")
     print("3- Exit\n")
-    userChoice = input("Please enter your menu choice:\n")
+    userChoice = input("Please enter your menu choice: ")
+
+    while validateChoice(userChoice) != True:
+        userChoice = input("Please enter your menu choice: ")
+        validateChoice(userChoice)
+
     if int(userChoice) == 1:
         UserID()
-    if int(userChoice) == 2:
-        ViewResults()
-    while not validateChoice(userChoice):
-        userChoice = input("Please enter your menu choice:\n")
-        validateChoice(userChoice)
-        #grab userChoice for input
-        print(userChoice)
-
+    elif int(userChoice) == 2:
+        CorrectAnswers()
+    elif int(userChoice) == 3:
+        if os.path.exists('results.txt'):
+            print("\nThank you for taking the quiz. Have a nice day.\n")
+            quit()
+        else:
+            print("\nExiting program. Have a nice day.\n")
+            quit()
+    elif int(userChoice) == 4:  # hidden choice
+        try:
+            os.remove("results.txt")
+            input("\nFile deleted. Press enter to continue...")
+        except:
+            print("\nNo file found.")
+            input('\nPress enter to continue...')
+        MainMenu()
 
 def UserID():
     now = datetime.now()
-    time_string = now.strftime('%H:%M:%S')
+    time_string = now.strftime('%m/%d/%Y %H:%M:%S')
     name = ''
     studentID = ''
     name = input('Please enter your first and last name: ')
-    studentID = input('Enter your student ID: ')
-    if studentID.isdigit():
-        print('Name: ' + name)
-        print('Student ID: ' + studentID)
-        print('Time: ', time_string)
-        print('Press any key to begin the quiz...')
-        Question()
-    else: 
-        print('Either the information you have entered is invalid, or your student ID does not meet the requirements.')
-        print('Requirements: Numbers Only, 10 Character Limit')
+
+    id_valid: bool = False
+
+    while not id_valid:
+        studentID = input('Enter your student ID: ')
+
+        if studentID.isdigit() and len(studentID) <= 10:
+            id_valid = True
+            print('\nName: ' + name)
+            print('Student ID: ' + studentID)
+            print('Time: ' + time_string)
+
+            input('\nPress any key to begin the quiz...')
+            cls()
+            Question()
+        else:
+            id_valid = False
+            print(
+                '\nEither the information you have entered is invalid, or your student ID does not meet the requirements.')
+            print('Requirements: Numbers Only, 10 Character Limit\n')
+
+
 def Question():
-    #initialize and define all variables
-    index = 0
-    question1Array = ['Question 1: A video display is a(n)...\n','1. Output device\n','2. Input device\n','3. Control device\n','4. Cord that you plug into your television\n']
-    question2Array = ['Question 2: A(n) ___ sets a variable to a specified value.\n','1. Variable declaration\n','2. Not a variable declaration\n','3. Not even close to a variable declaration\n','4. None of the above\n']
-    question3Array = ['Question 3: You ___ the module to execute it\n.','1. Call\n','2. Infinitely loop\n','3. Create\n','4. Print\n']
-    question4Array = ['Question 4: A(n) ___ expression.\n','1. Not boolean 1\n','2. Not boolean 2\n','3. Not boolean 3\n','4. Boolean\n']
-    #while loop that steps through each index and prints them out
-    while index < 5:
-        print(question1Array[index])
-        index = index + 1
-    #request user input
-    question1Response = input('Please enter the integer associated with your answer choice: ')
-    #assure a response from 1-4
-    if int(question1Response) < 1 or int(question1Response) > 4:
-        print('Invalid input. Integer must be from 1-4.')
-        question1Response = print('Please enter the integer associated with your answer choice: ')
-    #reset index to 0 so the other while loops can step through the array
-    index = 0
-    while index < 5:
-        print(question2Array[index])
-        index = index + 1
-    question2Response = input('Please enter the integer associated with your answer choice: ')
-    if int(question2Response) < 1 or int(question2Response) > 4:
-        print('Invalid input. Integer must be from 1-4.')
-        question2Response = print('Please enter the integer associated with your answer choice: ')
-    index = 0
-    while index < 5:
-        print(question3Array[index])
-        index = index + 1
-    question3Response = input('Please enter the integer associated with your answer choice: ')
-    if int(question3Response) < 1 or int(question3Response) > 4:
-        print('Invalid input. Integer must be from 1-4.')
-        question3Response = print('Please enter the integer associated with your answer choice: ')
-    index = 0
-    while index < 5:
-        print(question4Array[index])
-        index = index + 1
-    question4Response = input('Please enter the integer associated with your answer choice: ')
-    if int(question4Response) < 1 or int(question4Response) > 4:
-        print('Invalid input. Integer must be from 1-4.')
-        question4Response = print('Please enter the integer associated with your answer choice: ')
+    # initialize and define all variables
+
+    questions = [
+        "A video display is a(n)...",
+        "A(n) ___ sets a variable to a specified value.",
+        "You ___ the module to execute it.",
+        "A(n) ___ expression.",
+        "A(n) ___ loop has no way of ending and repeats until the program is interrupted."]
+    opt_1 = [
+        "Output device",
+        "Variable declaration",
+        "Call",
+        "Not boolean",
+        "Infinite"]
+    opt_2 = [
+        "Input device",
+        "Not a variable declaration",
+        "Infinitely loop",
+        "Not boolean",
+        "For"]
+    opt_3 = [
+        "Control device",
+        "Not even close to a variable declaration",
+        "Create",
+        "Not boolean",
+        "Do-While"]
+    opt_4 = [
+        "Cord that you plug into your television",
+        "None of the above",
+        "Print",
+        "Boolean",
+        "Try"]
+    responses = []
+
+    for i in range(len(questions)):
+        response_invalid: bool = True
+        print("Question {0}: {1}\n\n".format(i + 1, questions[i]))
+        print("1. {0}\n".format(opt_1[i]))
+        print("2. {0}\n".format(opt_2[i]))
+        print("3. {0}\n".format(opt_3[i]))
+        print("4. {0}\n".format(opt_4[i]))
+
+        while response_invalid:
+            response = input("\nPlease enter the integer associated with your answer choice: ")
+            if not (response.isdigit() and 4 >= int(response) >= 1):
+                print("\nResponse Invalid. Please enter a valid integer between 1-4.\n")
+                response_invalid = True
+            else:
+                response_invalid = False
+                responses.append(response)
+        cls()
+
     results = open('results.txt', 'w')
-    results.write(str(question1Response) + str(question2Response) + str(question3Response) + str(question4Response))
-    results.close
-    ViewResults()
-'''
-def WriteResults():
-with open('quiz_results.txt','w') as results:
-    results.write(question1Response, question2Response, question3Response, question4Response)
+    for i in range(len(responses)):
+        results.write(str("{0}\n").format(responses[i]))
     results.close()
-ViewResults()
-'''
 
-def ViewResults():
-    results = open('results.txt' 'r')
-    print(results)
+    CorrectAnswers()
+
+
+def CorrectAnswers():
+    cls()
+    try:
+        with open("results.txt") as f:
+
+            line = f.readline()
+            print("Answers given:\n")
+            while line != "":
+                print(line)
+                line = f.readline()
+            f.close()
+
+            print("Correct answers are...")
+            print("\n#1- 1. Output Device")
+            print("#2- 1. Variable Declaration")
+            print("#3- 1. Call")
+            print("#4- 4. Boolean")
+            print("#5- 1. Infinite")
+
+    except IOError:
+
+        print("\nPlease take the test first.")
+
+    input("\n\n\nPress any key to return to the main menu...")
+    cls()
+    MainMenu()
+
+
 MainMenu()
-
