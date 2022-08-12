@@ -8,3 +8,6 @@ Since this was a first year programming class, there were some small things that
 
 ## Examples
 
+![image](https://user-images.githubusercontent.com/107071736/184424276-54b1848f-b328-48c9-b6bf-8e318e4a1edb.png)
+
+![image](https://user-images.githubusercontent.com/107071736/184424458-662a9219-07bd-47dd-b829-fae699f86bd1.png)
