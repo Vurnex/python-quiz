@@ -88,25 +88,25 @@ def Question():
         "A video display is a(n)...",
         "A(n) ___ sets a variable to a specified value.",
         "You ___ the module to execute it.",
-        "A(n) ___ expression.",
+        "A(n) ___ expression can be set to either True or False.",
         "A(n) ___ loop has no way of ending and repeats until the program is interrupted."]
     opt_1 = [
         "Output device",
         "Variable declaration",
         "Call",
-        "Not boolean",
+        "Integer",
         "Infinite"]
     opt_2 = [
         "Input device",
-        "Not a variable declaration",
+        "Print statement",
         "Infinitely loop",
-        "Not boolean",
+        "String",
         "For"]
     opt_3 = [
         "Control device",
-        "Not even close to a variable declaration",
+        "Import library",
         "Create",
-        "Not boolean",
+        "Double",
         "Do-While"]
     opt_4 = [
         "Cord that you plug into your television",
