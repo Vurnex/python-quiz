@@ -12,7 +12,7 @@ def validateChoice(userChoice):
     
     val = int(userChoice)
 
-    if val >= 1 and val <= 4:  # ensure
+    if val >= 1 and val <= 4:
         return True
     else:
         print("\nThe available choices are 1-3.\n")
@@ -82,7 +82,6 @@ def UserID():
 
 
 def Question():
-    # initialize and define all variables
 
     questions = [
         "A video display is a(n)...",
